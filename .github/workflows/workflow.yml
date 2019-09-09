@@ -146,8 +146,7 @@ jobs:
 
   # deploy new database schema using dacpac
   deployDB:
-      # needs: [buildDatabase, provisionInfra]
-      needs: buildDatabase
+      needs: [buildDatabase, provisionInfra]
       runs-on: windows-latest
       steps:
       # download build artifacts
