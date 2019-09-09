@@ -8,12 +8,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    # checkout code from repo
-    - name: checkout repo
-      uses: actions/checkout@v1
-
-    # use msbuild to build VS solution which has the SSDT project
-    - name: build solution
+    
+    # test the variable
+    - name: test var
       uses: abelsquidhead/testinput@master
       with:
-        myInput: abc
+        myInput: ${{ github.workspace }}
