@@ -171,5 +171,3 @@ jobs:
       #     /SourceFile:"%GITHUB_WORKSPACE%\db\MercuryHealthDB.dacpac" 
       #     /TargetConnectionString:"${{ secrets.DATABASE_CONNECTION_STRING }}" 
       #     /p:BlockOnPossibleDataLoss=False
-
-          
