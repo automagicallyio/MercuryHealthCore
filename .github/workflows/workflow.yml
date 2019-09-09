@@ -155,13 +155,13 @@ jobs:
         with: 
           name: db
 
-      # deploy dacpac calling my dacpac-deploy task
-      - name: update database schema using dacpac deploy action
-        uses: abelsquidhead/dacpac-deploy@master
-        with:
-          connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
-          dacpac: 'db\MercuryHealthDB.dacpac'
-          additionalArguments: '/p:BlockOnPossibleDataLoss=False'
+      # # deploy dacpac calling my dacpac-deploy task
+      # - name: update database schema using dacpac deploy action
+      #   uses: abelsquidhead/dacpac-deploy@master
+      #   with:
+      #     connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
+      #     dacpac: 'db\MercuryHealthDB.dacpac'
+      #     additionalArguments: '/p:BlockOnPossibleDataLoss=False'
 
       # # call sqlpackage.exe to deploy my db schema using my dacpac
       # - name: update database schema using dacpac
