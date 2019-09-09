@@ -1,0 +1,19 @@
+name: Test Default Variable Workflow
+
+on: [push]
+
+jobs:
+  # build database schema, build artifact is the dacpac
+  testDefaultVar:
+    runs-on: windows-latest
+
+    steps:
+    # checkout code from repo
+    - name: checkout repo
+      uses: actions/checkout@v1
+
+    # use msbuild to build VS solution which has the SSDT project
+    - name: build solution
+      uses: abelsquidhead/testinput@master
+      with:
+        myInput: {{github.GITHUB_WORKSPACE}}
