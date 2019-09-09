@@ -16,4 +16,4 @@ jobs:
     - name: build solution
       uses: abelsquidhead/testinput@master
       with:
-        myInput: {{github.GITHUB_WORKSPACE}}
+        myInput: abc
