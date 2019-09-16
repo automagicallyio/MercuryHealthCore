@@ -1,0 +1,8 @@
+bin/
+obj/
+/.vs
+/packages
+/src/MercuryHealth.UnitTests/FakesAssemblies/*
+/MercuryHealthDB/MercuryHealthDB.jfm
+*.dbmdl
+*.orig
