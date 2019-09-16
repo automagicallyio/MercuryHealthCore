@@ -142,7 +142,7 @@ jobs:
         with:
           app-name: abelmercurywebcore  # Replace with your app name
           package: webapp  # Specify the folder or file to deploy
-          publish-profile: ${{ secrets.PUBLISH_PROFILE_2 }}  # Replace with the name of your publish profile
+          publish-profile: ${{ secrets.PUBLISH_PROFILE }}  # Replace with the name of your publish profile
 
   # deploy new database schema using dacpac
   deployDB:
