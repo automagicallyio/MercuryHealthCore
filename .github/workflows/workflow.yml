@@ -155,19 +155,18 @@ jobs:
         with: 
           name: db
 
-      # # deploy dacpac calling my dacpac-deploy task
-      # - name: update database schema using dacpac deploy action
-      #   uses: abelsquidhead/dacpac-deploy@master
-      #   with:
-      #     connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
-      #     dacpac: 'db\MercuryHealthDB.dacpac'
-      #     additionalArguments: '/p:BlockOnPossibleDataLoss=False'
+      # deploy dacpac calling my dacpac-deploy task
+      - name: update database schema using dacpac deploy action
+        uses: abelsquidhead/dacpac-deploy@master
+        with:
+          connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
+          dacpac: 'db\MercuryHealthDB.dacpac'
+          additionalArguments: '/p:BlockOnPossibleDataLoss=False'
 
-      # # call sqlpackage.exe to deploy my db schema using my dacpac
-      # - name: update database schema using dacpac
-      #   run: >
-      #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\sqlpackage.exe" 
-      #     /Action:Publish 
-      #     /SourceFile:"%GITHUB_WORKSPACE%\db\MercuryHealthDB.dacpac" 
-      #     /TargetConnectionString:"${{ secrets.DATABASE_CONNECTION_STRING }}" 
-      #     /p:BlockOnPossibleDataLoss=False
+      # deploy dacpac calling my dacpac-deploy task
+      - name: update database schema using dacpac deploy action
+        uses: abelsquidhead/dacpac-deploy@master
+        with:
+          connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
+          dacpac: 'db\MercuryHealthDB.dacpac'
+          additionalArguments: '/p:BlockOnPossibleDataLoss=False'
