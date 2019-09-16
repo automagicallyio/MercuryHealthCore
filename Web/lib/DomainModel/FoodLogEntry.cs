@@ -34,8 +34,8 @@ namespace MercuryHealthCore.lib.DomainModel
         [Display(Name="Sodium/g")]
         public decimal SodiumInGrams { get; set; }
 
-        [Display(Name="Color")]
-        public string Color { get; set; }
+        //[Display(Name="Color")]
+        //public string Color { get; set; }
 
 
     }
