@@ -16,10 +16,7 @@ jobs:
         dotnet-version: 2.2.108
     
     - name: Build with dotnet
-      run: |
-        echo ls
-        ls
-        dotnet build Web/MercuryHealthCore.csproj --configuration Release
+      run: dotnet build Web/MercuryHealthCore.csproj --configuration Release
 
     - name: Test with dotnet
       run: dotnet test Web/MercuryHealthCore.csproj --configuration Release
@@ -52,12 +49,6 @@ jobs:
         echo "MSBuild.exe MercuryHealthDB.sqlproj"
         "MSBuild.exe" MercuryHealthDB\MercuryHealthDB.sqlproj
     
-    # look for dacpac
-    - name: find dacpac
-      run: |
-        echo "ls d:\a\MercuryHealthCore\MercuryHealthCore\MercuryHealthDB\bin\Debug\"
-        ls "%GITHUB_WORKSPACE%\MercuryHealthDB\bin\Debug"
-      
     # publish build artifact (dacpac) back to github
     - name: publish build artifacts back to GitHub
       uses: actions/upload-artifact@master

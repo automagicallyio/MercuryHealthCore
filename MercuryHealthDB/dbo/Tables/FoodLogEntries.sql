@@ -10,6 +10,7 @@
     [FatInGrams]           DECIMAL (18, 2) NOT NULL,
     [CarbohydratesInGrams] DECIMAL (18, 2) NOT NULL,
     [SodiumInGrams]        DECIMAL (18, 2) NOT NULL,
+    [Color] NVARCHAR(50) NULL, 
     CONSTRAINT [PK_FoodLogEntries] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_FoodLogEntries_MemberProfile_MemberProfileId] FOREIGN KEY ([MemberProfileId]) REFERENCES [dbo].[MemberProfile] ([Id])
 );
