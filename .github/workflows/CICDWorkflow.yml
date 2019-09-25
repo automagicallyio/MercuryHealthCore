@@ -3,93 +3,106 @@ name: Test Set App Service Connection String
 on: [push]
 
 jobs:
-  # build .net core web app
-  buildWeb:
-    runs-on: ubuntu-latest
-    
+  # set connection string
+  setConnectionString:
+    runs-on: unbuntu-latest
     steps:
-    - uses: actions/checkout@v1
-
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: set connection string
+      uses: abelsquidhead/set-azure-appservice-connectionstring@master
       with:
-        dotnet-version: 2.2.108
-    
-    - name: Build with dotnet
-      run: dotnet build Web/MercuryHealthCore.csproj --configuration Release
+        resourceGroup: 'testconnstringaction-rg'
+        appService: 'abel'
+        connectionStringType: 'SQLAzure'
+        connectionString: ${{ secrets.ABEL_CONNECTION_STRING }}
 
-    - name: Test with dotnet
-      run: dotnet test Web/MercuryHealthCore.csproj --configuration Release
+
+  # # build .net core web app
+  # buildWeb:
+  #   runs-on: ubuntu-latest
+    
+  #   steps:
+  #   - uses: actions/checkout@v1
+
+  #   - name: Setup .NET Core
+  #     uses: actions/setup-dotnet@v1
+  #     with:
+  #       dotnet-version: 2.2.108
+    
+  #   - name: Build with dotnet
+  #     run: dotnet build Web/MercuryHealthCore.csproj --configuration Release
+
+  #   - name: Test with dotnet
+  #     run: dotnet test Web/MercuryHealthCore.csproj --configuration Release
       
-    - name: Package everything up with dotnet
-      run: dotnet publish Web/MercuryHealthCore.csproj --configuration Release
+  #   - name: Package everything up with dotnet
+  #     run: dotnet publish Web/MercuryHealthCore.csproj --configuration Release
 
-    - name: publish build artifacts back to GitHub
-      uses: actions/upload-artifact@master
-      with:
-        name: webapp
-        path: Web/bin/Release/netcoreapp2.2/publish
+  #   - name: publish build artifacts back to GitHub
+  #     uses: actions/upload-artifact@master
+  #     with:
+  #       name: webapp
+  #       path: Web/bin/Release/netcoreapp2.2/publish
 
-  # build database schema, build artifact is the dacpac
-  buildDatabase:
-    runs-on: windows-latest
+  # # build database schema, build artifact is the dacpac
+  # buildDatabase:
+  #   runs-on: windows-latest
 
-    steps:
-    # checkout code from repo
-    - name: checkout repo
-      uses: actions/checkout@v1
+  #   steps:
+  #   # checkout code from repo
+  #   - name: checkout repo
+  #     uses: actions/checkout@v1
 
-    # setup build machine and MSBuild
-    - name: Setup MSBuild.exe
-      uses: warrenbuckley/Setup-MSBuild@v1
+  #   # setup build machine and MSBuild
+  #   - name: Setup MSBuild.exe
+  #     uses: warrenbuckley/Setup-MSBuild@v1
 
-    # use msbuild to build VS solution which has the SSDT project
-    - name: build solution
-      run: |
-        echo "MSBuild.exe MercuryHealthDB.sqlproj"
-        "MSBuild.exe" MercuryHealthDB\MercuryHealthDB.sqlproj
+  #   # use msbuild to build VS solution which has the SSDT project
+  #   - name: build solution
+  #     run: |
+  #       echo "MSBuild.exe MercuryHealthDB.sqlproj"
+  #       "MSBuild.exe" MercuryHealthDB\MercuryHealthDB.sqlproj
     
-    # publish build artifact (dacpac) back to github
-    - name: publish build artifacts back to GitHub
-      uses: actions/upload-artifact@master
-      with:
-        name: db
-        path: MercuryHealthDB\bin\Debug
+  #   # publish build artifact (dacpac) back to github
+  #   - name: publish build artifacts back to GitHub
+  #     uses: actions/upload-artifact@master
+  #     with:
+  #       name: db
+  #       path: MercuryHealthDB\bin\Debug
 
-  # deploy web app to azure app service
-  deployWeb:
-    needs: buildWeb
-    runs-on: windows-latest
-    steps:
-    # download build artifacts
-    - name: download build artifacts
-      uses: actions/download-artifact@master
-      with: 
-        name: webapp
+  # # deploy web app to azure app service
+  # deployWeb:
+  #   needs: buildWeb
+  #   runs-on: windows-latest
+  #   steps:
+  #   # download build artifacts
+  #   - name: download build artifacts
+  #     uses: actions/download-artifact@master
+  #     with: 
+  #       name: webapp
 
-    # Deploy build artifact to Azure App Service
-    - name: Publish website to Azure App Service
-      uses: azure/appservice-actions/webapp@master
-      with:
-        app-name: abelmercurywebcore  # Replace with your app name
-        package: webapp  # Specify the folder or file to deploy
-        publish-profile: ${{ secrets.PUBLISH_PROFILE }}  # Replace with the name of your publish profile}
+  #   # Deploy build artifact to Azure App Service
+  #   - name: Publish website to Azure App Service
+  #     uses: azure/appservice-actions/webapp@master
+  #     with:
+  #       app-name: abelmercurywebcore  # Replace with your app name
+  #       package: webapp  # Specify the folder or file to deploy
+  #       publish-profile: ${{ secrets.PUBLISH_PROFILE }}  # Replace with the name of your publish profile}
 
-  # deploy new database schema using dacpac
-  deployDB:
-    needs: buildDatabase
-    runs-on: windows-latest
-    steps:
-    # download build artifacts
-    - name: download build artifacts
-      uses: actions/download-artifact@master
-      with: 
-        name: db
+  # # deploy new database schema using dacpac
+  # deployDB:
+  #   needs: buildDatabase
+  #   runs-on: windows-latest
+  #   steps:
+  #   # download build artifacts
+  #   - name: download build artifacts
+  #     uses: actions/download-artifact@master
+  #     with: 
+  #       name: db
 
-    # deploy dacpac calling my dacpac-deploy task
-    - name: update database schema using dacpac deploy action
-      uses: abelsquidhead/dacpac-deploy@master
-      with:
-        connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
-        dacpac: 'db\MercuryHealthDB.dacpac'
-        additionalArguments: '/p:BlockOnPossibleDataLoss=False'
+  #   # deploy dacpac calling my dacpac-deploy task
+  #   - name: update database schema using dacpac deploy action
+  #     uses: abelsquidhead/dacpac-deploy@master
+  #     with:
+  #       connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
+  #       dacpac: 'db\MercuryHealthDB.dacpac'
+  #       additionalArguments: '/p:BlockOnPossibleDataLoss=False'
