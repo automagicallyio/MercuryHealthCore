@@ -14,6 +14,7 @@ jobs:
         connectionStringType: 'SQLAzure'
         connectionString: ${{ secrets.ABEL_CONNECTION_STRING }}
 
+
   # # build .net core web app
   # buildWeb:
   #   runs-on: ubuntu-latest
