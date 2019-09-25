@@ -1,9 +1,9 @@
-name: Mercury Health Core Demo CI/CD
-
+# name: Mercury Health Core Demo CI/CD
+name: Test Set App Service Connection String
 on: [push]
 
 jobs:
-  setConnectionStringToAppService:
+  setConnectionString:
     runs-on: ubuntu-latest
     setps:
     - name: set connection string to app service
