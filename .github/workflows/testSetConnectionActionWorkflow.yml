@@ -1,0 +1,12 @@
+name: Test Set Connection String Action
+
+on: [push]
+
+jobs:
+  # test set connectionstring
+  setConnectionString:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Set connection string
+      run: echo "hello world"
