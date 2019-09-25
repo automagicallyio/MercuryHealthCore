@@ -6,16 +6,10 @@ jobs:
   # set connection string
   setConnectionString:
     runs-on: unbuntu-latest
+    
     steps:
-    - name: set connection string
-      uses: abelsquidhead/set-azure-appservice-connectionstring@master
-      with:
-        resourceGroup: 'testconnstringaction-rg'
-        appService: 'abel'
-        connectionStringType: 'SQLAzure'
-        connectionString: ${{ secrets.ABEL_CONNECTION_STRING }}
-
-
+    - name: echo baby
+      run: echo "hello world"
   # # build .net core web app
   # buildWeb:
   #   runs-on: ubuntu-latest
