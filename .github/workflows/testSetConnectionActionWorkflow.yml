@@ -19,3 +19,4 @@ jobs:
         appService: 'abel'
         connectionStringType: 'SQLAzure'
         connectionString: ${{ secrets.ABEL_CONNECTION_STRING }}
+        connectionStringName: 'DefaultConnection'
