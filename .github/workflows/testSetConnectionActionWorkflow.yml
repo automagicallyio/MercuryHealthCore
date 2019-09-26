@@ -14,6 +14,7 @@ jobs:
         servicePrincipal: 'http://AbelDeployPrincipal'
         servicePrincipalTenant: '72f988bf-86f1-41af-91ab-2d7cd011db47'
         servicePrincipalSecret: ${{ secrets.SERVICE_PRINCIPAL_SECRET }}
+        azureSubscriptionName: 'ca-abewan-demo-test'
         resourceGroup: 'testconnstringaction-rg'
         appService: 'abel'
         connectionStringType: 'SQLAzure'
