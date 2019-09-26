@@ -9,4 +9,9 @@ jobs:
     
     steps:
     - name: Set connection string
-      run: echo "hello world"
+      uses: abelsquidhead/set-azure-appservice-connectionstring@master
+      with:
+        resourceGroup: 'testconnstringaction-rg'
+        appService: 'abel'
+        connectionStringType: 'SQLAzure'
+        connectionString: ${{ secrets.ABEL_CONNECTION_STRING }}
