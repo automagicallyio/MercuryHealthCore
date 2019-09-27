@@ -9,7 +9,7 @@ jobs:
     
     steps:
     - name: Set connection string
-      uses: abelsquidhead/set-azure-appservice-connectionstring@master
+      uses: abelsquidhead/set-azure-appservice-connectionstring@releases/v1
       with:
         servicePrincipal: 'http://AbelDeployPrincipal'
         servicePrincipalTenant: '72f988bf-86f1-41af-91ab-2d7cd011db47'
