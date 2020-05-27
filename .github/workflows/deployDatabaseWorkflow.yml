@@ -26,12 +26,12 @@ jobs:
       steps:
       # download build artifacts
       - name: download build artifacts
-        uses: actions/download-artifact
+        uses: actions/download-artifact@master
         with: 
           name: db
       # deploy dacpac calling my dacpac-deploy task
       - name: update database schema using dacpac deploy action
-        uses: automagicallyio/maxtest-deploy@master
+        uses: automagicallyio/maxtest-deploy
         with:
           connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
           dacpac: 'db\MercuryHealthDB.dacpac'
