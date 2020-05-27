@@ -34,5 +34,5 @@ jobs:
         uses: automagicallyio/maxtest-deploy@master
         with:
           connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
-          dacpac: 'db\MercuryHealthDB.dacpac'
+          dacpac: 'MercuryHealthDB.dacpac'
           additionalArguments: '/p:BlockOnPossibleDataLoss=False'
