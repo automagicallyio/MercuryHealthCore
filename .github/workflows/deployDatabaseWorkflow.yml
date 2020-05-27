@@ -26,7 +26,7 @@ jobs:
       steps:
       # download build artifacts
       - name: download build artifacts
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact
         with: 
           name: db
       # deploy dacpac calling my dacpac-deploy task
