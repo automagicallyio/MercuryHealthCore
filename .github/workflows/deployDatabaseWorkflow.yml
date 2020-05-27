@@ -33,6 +33,8 @@ jobs:
       - name: update database schema using dacpac deploy action
         uses: automagicallyio/maxtest-deploy@master
         with:
+          repository: automagicallyio/maxtest-deploy
+          token: ${{ secrets.GIT_HUB_TOKEN }} 
           connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
           dacpac: 'db\MercuryHealthDB.dacpac'
           additionalArguments: '/p:BlockOnPossibleDataLoss=False'
