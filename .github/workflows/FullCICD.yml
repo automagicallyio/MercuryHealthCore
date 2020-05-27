@@ -1,6 +1,9 @@
 name: Mercury Health Core CI/CD
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - '**'
 
 jobs:
   # build .net core web app
