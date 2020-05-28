@@ -3,6 +3,36 @@ name: Mercury Health Core CI/CD
 on: [push]
 
 jobs:
+  buildWeb:
+    # build .net core web app
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    
+    - name: Build with dotnet
+      run: |
+        echo ls
+        ls
+        dotnet build Web/MercuryHealthCore.csproj --configuration Release
+
+    - name: Test with dotnet
+      run: dotnet test Web/MercuryHealthCore.csproj --configuration Release
+      
+    - name: Package everything up with dotnet
+      run: dotnet publish Web/MercuryHealthCore.csproj --configuration Release
+
+    - name: publish build artifacts back to GitHub
+      uses: actions/upload-artifact@master
+      with:
+        name: webapp
+        path: Web/bin/Release/netcoreapp2.2/publish
+
   # publish IaC as build artifact
   uploadIaC:
     runs-on: windows-latest
@@ -30,7 +60,7 @@ jobs:
       with:
         name: IaC
 
-    - name: look for ps1 file
+    - name: check powershell script
       run: |
         Get-ChildItem '${{ github.workspace }}\AzCLI'
 
@@ -66,3 +96,23 @@ jobs:
         -dbName %DB_NAME% 
         -webAppName %WEB_APP_NAME% 
         -environment %ENVIRONMENT%
+
+  # deploy web app to azure app service
+  deployWeb:
+      needs: [buildWeb, provisionInfra]
+      runs-on: windows-latest
+      steps:
+      # download build artifacts
+      - name: download build artifacts
+        uses: actions/download-artifact@master
+        with: 
+          name: webapp
+
+      # Deploy build artifact to Azure App Service
+      - name: Publish website to Azure App Service
+        uses: azure/appservice-actions/webapp@master
+        with:
+          app-name: abelmercurywebcore  # Replace with your app name
+          package: webapp  # Specify the folder or file to deploy
+          publish-profile: ${{ secrets.PUBLISH_PROFILE }}  # Replace with the name of your publish profile
+
