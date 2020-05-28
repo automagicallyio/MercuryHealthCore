@@ -32,7 +32,7 @@ jobs:
 
     - name: look for ps1 file
       run: |
-        Get-ChildItem '${{ github.workspace }}
+        Get-ChildItem '${{ github.workspace }}'
 
     - name: provision webapp and db infrastructure in azure
       env:
