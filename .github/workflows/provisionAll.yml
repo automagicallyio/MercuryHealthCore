@@ -32,6 +32,7 @@ jobs:
 
     - name: look for ps1 file
       run: |
+        ls '${{ github.workspace }}
         ls '${{ github.workspace }}\IaC\AzCLI'
 
     - name: provision webapp and db infrastructure in azure
