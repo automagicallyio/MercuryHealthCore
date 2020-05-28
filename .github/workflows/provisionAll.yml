@@ -152,6 +152,6 @@ jobs:
       - name: update database schema using dacpac deploy action
         uses: automagicallyio/maxtest-deploy@master
         with:
-          connectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
+          connectionString: ${{ secrets.DB_CONNECTION_STRING }}
           dacpac: 'MercuryHealthDB.dacpac'
           additionalArguments: '/p:BlockOnPossibleDataLoss=False'
