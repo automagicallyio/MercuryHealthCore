@@ -33,6 +33,25 @@ jobs:
         name: webapp
         path: Web/bin/Release/netcoreapp2.2/publish
 
+  # build database schema, build artifact is the dacpac
+  buildDatabase:
+    runs-on: windows-latest
+    steps:
+    # checkout code from repo
+    - name: checkout repo
+      uses: actions/checkout@v1
+    # use msbuild to build VS solution which has the SSDT project
+    - name: build solution
+      run: |
+        echo "Building MercuryHealthCore.sln"
+        & "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" /t:Restore,Build MercuryHealthCore.sln
+    # publish build artifact (dacpac) back to github
+    - name: publish build artifacts back to GitHub
+      uses: actions/upload-artifact@master
+      with:
+        name: db
+        path: MercuryHealthDB\bin\Debug
+
   # publish IaC as build artifact
   uploadIaC:
     runs-on: windows-latest
@@ -119,3 +138,20 @@ jobs:
         with:
           app-name: maxtestmhc-beta  # Replace with your app name
 
+  # deploy new database schema using dacpac
+  deployDB:
+      needs: [buildDatabase, provisionInfra]
+      runs-on: windows-latest
+      steps:
+      # download build artifacts
+      - name: download build artifacts
+        uses: actions/download-artifact@master
+        with: 
+          name: db
+      # deploy dacpac calling my dacpac-deploy task
+      - name: update database schema using dacpac deploy action
+        uses: automagicallyio/maxtest-deploy@master
+        with:
+          connectionString: ${{ secrets.DB_CONNECTION_STRING }}
+          dacpac: 'MercuryHealthDB.dacpac'
+          additionalArguments: '/p:BlockOnPossibleDataLoss=False'
