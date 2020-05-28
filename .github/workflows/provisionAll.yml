@@ -138,20 +138,3 @@ jobs:
         with:
           app-name: maxtestmhc-beta  # Replace with your app name
 
-  # deploy new database schema using dacpac
-  deployDB:
-      needs: [buildDatabase, provisionInfra]
-      runs-on: windows-latest
-      steps:
-      # download build artifacts
-      - name: download build artifacts
-        uses: actions/download-artifact@master
-        with: 
-          name: db
-      # deploy dacpac calling my dacpac-deploy task
-      - name: update database schema using dacpac deploy action
-        uses: automagicallyio/maxtest-deploy@master
-        with:
-          connectionString: ${{ secrets.DB_CONNECTION_STRING }}
-          dacpac: 'MercuryHealthDB.dacpac'
-          additionalArguments: '/p:BlockOnPossibleDataLoss=False'
