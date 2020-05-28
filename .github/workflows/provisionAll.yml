@@ -118,5 +118,4 @@ jobs:
         uses: azure/appservice-actions/webapp@master
         with:
           app-name: maxtestmhc-beta  # Replace with your app name
-          package: webapp  # Specify the folder or file to deploy
 
