@@ -108,11 +108,15 @@ jobs:
         with: 
           name: webapp
 
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       # Deploy build artifact to Azure App Service
       - name: Publish website to Azure App Service
         uses: azure/appservice-actions/webapp@master
         with:
-          app-name: abelmercurywebcore  # Replace with your app name
+          app-name: maxtestmhc-beta  # Replace with your app name
           package: webapp  # Specify the folder or file to deploy
-          publish-profile: ${{ secrets.PUBLISH_PROFILE }}  # Replace with the name of your publish profile
 
