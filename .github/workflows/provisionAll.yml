@@ -32,7 +32,7 @@ jobs:
 
     - name: look for ps1 file
       run: |
-        Get-ChildItem '${{ github.workspace }}'
+        Get-ChildItem '${{ github.workspace }}\AzCLI'
 
     - name: provision webapp and db infrastructure in azure
       env:
@@ -50,7 +50,7 @@ jobs:
         WEB_APP_NAME: maxtestmercuryhealthcore-beta
         ENVIRONMENT: "[beta]"
       run: >
-        powershell -command "& '${{ github.workspace }}\IaC\AzCLI\provisionWebAndDB.ps1'" 
+        powershell -command "& '${{ github.workspace }}\AzCLI\provisionWebAndDB.ps1'" 
         -servicePrincipal %SERVICE_PRINCIPAL% 
         -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
         -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
