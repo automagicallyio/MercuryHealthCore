@@ -39,15 +39,15 @@ jobs:
         SERVICE_PRINCIPAL: http://62e58f3b-cc53-468e-9e7b-7c9198dfd273/automagically-demo-spn
         SERVICE_PRINCIPAL_TENANT: 62e58f3b-cc53-468e-9e7b-7c9198dfd273
         AZURE_SUBSCRIPTION_NAME: "Microsoft Azure Sponsorship"
-        RESOURCE_GROUP: MercuryHealthCore
+        RESOURCE_GROUP: mhcbeta
         RESOURCE_GROUP_REGION: eastus
-        SERVER_NAME: maxtestmercuryhealthcoredbserverbeta
+        SERVER_NAME: maxtestmhcdbsrvbeta
         DB_LOCATION: eastus
         ADMIN_LOGIN: maxtest
         START_IP: 0.0.0.0
         END_IP: 0.0.0.0
-        DB_NAME: maxtestmercuryhealthcoredbbeta
-        WEB_APP_NAME: maxtestmercuryhealthcore-beta
+        DB_NAME: maxtestmhcdbbeta
+        WEB_APP_NAME: maxtestmhc-beta
         ENVIRONMENT: "[beta]"
       run: >
         powershell -command "& '${{ github.workspace }}\AzCLI\provisionWebAndDB.ps1'" 
