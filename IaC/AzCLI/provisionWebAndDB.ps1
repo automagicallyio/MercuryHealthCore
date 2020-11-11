@@ -59,6 +59,14 @@ param(
     [string]
     $webAppName,
 
+    [Parameter(Mandatory = $False)]  
+    [string]
+    $AZURE_CREDENTIALS,
+
+    [Parameter(Mandatory = $False)]  
+    [string]
+    $DB_CONNECTION_STRING,
+
     [Parameter(Mandatory = $True)]  
     [string]
     $environment
@@ -68,6 +76,11 @@ param(
 #region Login
 # This logs in a service principal
 #
+Write-Output "servicePrincipalSecret: " $servicePrincipalSecret
+Write-Output "adminPassword: " $adminPassword
+Write-Output "DB_CONNECTION_STRING: " $DB_CONNECTION_STRING
+Write-Output "AZURE_CREDENTIALS: " $AZURE_CREDENTIALS
+
 Write-Output "Logging in to Azure with a service principal..."
 az login `
     --service-principal `
