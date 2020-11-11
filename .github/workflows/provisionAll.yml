@@ -115,6 +115,8 @@ jobs:
         -dbName %DB_NAME% 
         -webAppName %WEB_APP_NAME% 
         -environment %ENVIRONMENT%
+        -DB_CONNECTION_STRING ${{ secrets.DB_CONNECTION_STRING }}
+        -AZURE_CREDENTIALS ${{ secrets.AZURE_CREDENTIALS }}
 
   # deploy web app to azure app service
   deployWeb:
