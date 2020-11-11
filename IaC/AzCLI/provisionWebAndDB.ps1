@@ -59,12 +59,8 @@ param(
     [string]
     $webAppName,
 
-    [Parameter(Mandatory = $False)]  
-    [string]
     $AZURE_CREDENTIALS,
 
-    [Parameter(Mandatory = $False)]  
-    [string]
     $DB_CONNECTION_STRING,
 
     [Parameter(Mandatory = $True)]  
