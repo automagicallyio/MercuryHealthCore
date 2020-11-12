@@ -61,12 +61,54 @@ jobs:
     - name: checkout repo
       uses: actions/checkout@v1
 
+    - name: get secrets
+      run: |
+        "${{ secrets.SERVICE_PRINCIPAL_SECRET }}" | Out-File ${{ github.workspace }}\1.txt
+        Write-Output "servicePrincipalSecret: "
+        Get-Content ${{ github.workspace }}\1.txt
+
+        "${{ secrets.DB_PASSWORD }}" | Out-File ${{ github.workspace }}\2.txt
+        Write-Output "adminPassword: "
+        Get-Content ${{ github.workspace }}\2.txt
+
+        "${{ secrets.DB_CONNECTION_STRING }}" | Out-File ${{ github.workspace }}\3.txt
+        Write-Output "DB_CONNECTION_STRING: "
+        Get-Content ${{ github.workspace }}\3.txt
+
+        "${{ secrets.AZURE_CREDENTIALS }}" | Out-File ${{ github.workspace }}\4.txt
+        Write-Output "AZURE_CREDENTIALS: "
+        Get-Content ${{ github.workspace }}\4.txt
+
     # upload IaC folder
     - name: upload IaC
       uses: actions/upload-artifact@master
       with:
         name: IaC
         path: IaC
+
+    - name: upload 1
+      uses: actions/upload-artifact@master
+      with:
+        name: 1
+        path: 1.txt
+
+    - name: upload 2
+      uses: actions/upload-artifact@master
+      with:
+        name: 2
+        path: 2.txt
+
+    - name: upload 3
+      uses: actions/upload-artifact@master
+      with:
+        name: 3
+        path: 3.txt
+
+    - name: upload 4
+      uses: actions/upload-artifact@master
+      with:
+        name: 4
+        path: 4.txt
 
 # provision infrastructure in Azure
   provisionInfra:
@@ -115,8 +157,6 @@ jobs:
         -dbName %DB_NAME% 
         -webAppName %WEB_APP_NAME% 
         -environment %ENVIRONMENT%
-        -DB_CONNECTION_STRING "${{ secrets.DB_CONNECTION_STRING }}"
-        -AZURE_CREDENTIALS "${{ secrets.AZURE_CREDENTIALS }}"
 
   # deploy web app to azure app service
   deployWeb:
