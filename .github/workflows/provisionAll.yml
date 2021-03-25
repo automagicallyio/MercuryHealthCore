@@ -1,7 +1,17 @@
 name: Mercury Health Core CI/CD
 
-on: [push]
-
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'  
 jobs:
   buildWeb:
     # build .net core web app
